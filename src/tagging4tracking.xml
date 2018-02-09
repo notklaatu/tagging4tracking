@@ -1,0 +1,187 @@
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+          "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<article>
+  <articleinfo>
+    <author><firstname>Seth</firstname><surname>Kenlon</surname></author>
+    <authorinitials>sek</authorinitials>
+    <publisher><publishername>Red Hat</publishername></publisher>
+    <pubdate>2018</pubdate>
+    
+    <title>Tagging for Tracking</title>
+
+    <revhistory>
+      <revision>
+        <revnumber>0.8</revnumber>
+        <date>10 Feb 2018</date>
+        <revremark>Submitted.</revremark>
+      </revision>
+    </revhistory>
+  </articleinfo>
+
+  <section id="main">
+    <title>
+      Tag Categories
+    </title>
+    
+    <para>
+      We have defined six categories for tags.
+      Some are weighted more than others.
+    </para>
+  </section>
+  
+<section id="point-2">
+  <title>
+    Worth 2 Points
+  </title>
+  
+  <simplelist>
+    <member>
+	&#60;&#33;-- TechEditor: &#91;punctuation&#93; Incorrect punctuation. --&#62;
+    </member>
+    <member>
+	&#60;&#33;-- TechEditor: &#91;grammar&#93; Grammar mistakes and improvements. --&#62;
+    </member>
+    <member>
+	&#60;&#33;-- TechEditor: &#91;term&#93; Consistency and use of terminology and product names. --&#62;
+    </member>
+    <member>
+	&#60;&#33;-- TechEditor: &#91;logic&#93; How effectively ideas are conveyed. --&#62;
+    </member>
+  </simplelist>
+</section>
+
+<section id="point-1">
+  <title>
+    Worth 1 Points
+  </title>
+
+<simplelist>
+  <member>
+      &#60;&#33;-- TechEditor: &#91;standards&#93; Following standards when presenting technical output, writing Docbook tags, etc.. --&#62;
+  </member>
+  <member>
+      &#60;&#33;-- TechEditor: &#91;xml&#93; Docbook tags, standards, consistency. --&#62;
+  </member>
+</simplelist>
+</section>
+
+<section id="tag-place">
+  <title>
+    Placing Comments
+  </title>
+
+  <para>
+    We use <command>git blame</command> to track what category of comment has been applied to an author. Since skeleton files and chapters often contain elements committed by a scrum master, course architect, or another author, the placement of review comments is important.  
+  </para>
+
+  <para>
+    In the past, comments were placed after the closing XML tag for the element in which an error was found. For example&#58;
+  </para>
+
+  <screen>
+    &#60;para&#62;
+    The next step when modifying a style is to set your new style option so that your processor knows what it is. Use the &#60;command&#62;xsltproc&#60;&#47;command&#62; command or use stylesheets.
+    &#60;&#47;para&#62;
+    &#60;&#33;-- TechEdit: It's not clear how to do this. Suggested: "You can set a parameter dynamically as part of your &#60;command&#62;xsltproc&#60;&#47;command&#62; command, or you can make the change in an additional stylesheet." --&#62;
+  </screen>
+
+  <para>
+    In this example, the &#60;para&#62; element was entered into the document by the course architect but the text was written by a course developer. The comment therefore appears to be referring to the work of the course architect rather than the course designer. That is incorrect.
+  </para>
+
+  <para>
+    From now on, comments will now be placed on the line after the error to which it refers&#58;
+  </para>
+
+  <screen>
+    &#60;para&#62;
+    The next step when modifying a style is to set your new style option so that your processor knows what it is. Use the &#60;command&#62;xsltproc&#60;&#47;command&#62; command or use stylesheets.
+    &#60;&#33;-- TechEdit: &#91;logic&#93; It's not clear how to do this. Suggested: "You can set a parameter dynamically as part of your &#60;command&#62;xsltproc&#60;&#47;command&#62; command, or you can make the change in an additional stylesheet." --&#62;
+    &#60;&#47;para&#62;
+  </screen>
+
+  <para>
+    In this example, the comment is clearly about the content rather than the XML tag.
+  </para>
+
+  <para>
+    There may be some exceptions to this rule, including the &#60;title&#62; elements &#40;those are defined by the DCO, so the committer of the title content and the title tag tends to be the same&#41; and the &#60;listitem&#62;, which is embedded deep enough within other tags that they tend to be committed by the same person who wrote the content.
+  </para>
+</section>
+
+<section id="comment-tag">
+  <title>
+    Responding to Comments
+  </title>
+
+  <para>
+    When authors process comments, they are expected to respond to each one.
+  </para>
+
+  <para>
+    We have defined standard responses that demonstrate that a comment has been seen and processed in some way. They are&#58;
+  </para>
+  
+  <variablelist>
+    <varlistentry>
+      <term>
+	&#42;&#42;NOTABUG&#42;&#42;
+      </term>
+      <listitem>
+	<para>
+	  It might seem like this is wrong, but it's actually correct.
+	</para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>
+	&#42;&#42;WONTFIX&#42;&#42;
+      </term>
+      <listitem>
+	<para>
+	  I disagree with your assessment, and choose not to fix this.
+	</para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>
+	&#42;&#42;CANTFIX&#42;&#42;
+      </term>
+      <listitem>
+	<para>
+	  For some reason, I am unable to fix this problem.
+	</para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>
+	&#42;&#42;NEEDINFO&#42;&#42;
+      </term>
+      <listitem>
+	<para>
+	  I don't understand what you want from me.
+	</para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term>
+	&#42;&#42;FIXED&#42;&#42;
+      </term>
+      <listitem>
+	<para>
+	  This has been fixed.
+	</para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+
+<para>
+EOF
+</para>
+
+</section>
+</article>
